@@ -4,12 +4,6 @@
 
 ---
 
-**▶️ Demo Screenshot**
-
-
-
----
-
 ## 🚀 Quick Start
 
 ### Prerequisites
