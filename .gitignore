@@ -1,0 +1,21 @@
+# Python
+
+**pycache**
+
+# Airflow
+
+airflow\.db
+logs/
+
+# Streamlit
+
+.streamlit/
+
+# Docker Compose overrides and env files
+
+docker-compose.override.yml
+.env
+
+# Config: ignore real credentials file
+
+config/config.yaml

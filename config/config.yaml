@@ -1,0 +1,15 @@
+database:
+  host: postgresql-nihar.alwaysdata.net
+  port: 5432
+  database: nihar_demo
+  user: nihar
+  password: /A1z26n14/
+
+covid_api:
+  base_url: "https://disease.sh/v3/covid-19"
+  historical_country: "/historical/{country}?lastdays={days}"
+
+pipeline:
+  countries: ["USA", "India", "Brazil", "France"]
+  days: 365
+  rolling_window: 7
