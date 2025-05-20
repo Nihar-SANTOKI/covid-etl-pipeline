@@ -1,5 +1,7 @@
 # COVID-19 ETL Pipeline with Airflow & Streamlit
 
+This project demonstrates the full lifecycle of a data engineering pipeline—extracting historical COVID‑19 data via a public API, transforming it with rolling averages, and loading it into a managed PostgreSQL database—using Apache Airflow for orchestration and Streamlit for interactive visualization. Built as a hands‑on learning exercise to master ETL best practices, Docker Compose deployment, configuration management, and modern data‑quality checks.
+
 **Author:** Nihar SANTOKI (LinkedIn: [https://www.linkedin.com/in/nihar-santoki](https://www.linkedin.com/in/nihar-santoki), Email: [nihar.santoki@gmail.com](mailto:nihar.santoki@gmail.com))
 
 ---
@@ -72,6 +74,31 @@ flowchart TD
 ---
 
 ## ⚙️ Configuration
+
+### Database Schema
+
+The pipeline writes to a single table, **`covid_history`**, with the following structure:
+
+```sql
+-- Drop if it already exists (safe to run)
+DROP TABLE IF EXISTS covid_history;
+
+-- Create the table
+CREATE TABLE covid_history (
+  date            DATE               NOT NULL,
+  country         TEXT               NOT NULL,
+  cases           INTEGER,
+  deaths          INTEGER,
+  recovered       INTEGER,
+  new_cases       INTEGER,
+  new_deaths      INTEGER,
+  new_recovered   INTEGER,
+  avg7_new_cases  DOUBLE PRECISION,
+  avg7_new_deaths DOUBLE PRECISION,
+  avg7_new_recovered DOUBLE PRECISION,
+  PRIMARY KEY (date, country)
+);
+```
 
 ### `config/config.yaml`
 
