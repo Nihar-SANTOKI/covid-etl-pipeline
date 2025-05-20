@@ -1,0 +1,33 @@
+services:
+  airflow:
+    env_file:
+      - .env
+    image: apache/airflow:2.10.5
+    environment:
+      - AIRFLOW__CORE__SQL_ALCHEMY_CONN=${DB_CONN}
+      - _PIP_ADDITIONAL_REQUIREMENTS=yfinance pandas psycopg2-binary PyYAML
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./etl:/opt/airflow/etl
+      - ./config:/opt/airflow/config
+      - ./dashboard:/opt/airflow/dashboard
+    command: >
+      bash -c "airflow db init &&
+               airflow users create --username admin --password admin --firstname Admin --lastname User --role Admin --email nihar.santoki@gmail.com &&
+               airflow scheduler & airflow webserver"
+
+  streamlit:
+    image: python:3.9
+    env_file:
+      - .env
+    volumes:
+      - ./dashboard:/usr/src/app
+      - ./config:/usr/src/app/config
+    working_dir: /usr/src/app
+    command: >
+      bash -c "pip install streamlit sqlalchemy psycopg2-binary pandas PyYAML &&
+               streamlit run streamlit_app.py --server.port 8501"
+    ports:
+      - "8501:8501"
